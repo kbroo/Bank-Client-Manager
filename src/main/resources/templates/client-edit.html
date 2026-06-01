@@ -17,7 +17,7 @@
             <label>Email:<input type="text" th:field="*{email}"></label>
             <label>Номер телефона:<input type="text" th:field="*{phone}"></label><br>
             <button type="submit" >Сохранить</button><br>
-            <a th:href="@{/clients}">Вернуться</a>
+            <a th:href="@{/clients/{id}(id=${client.id})}">Вернуться</a>
         </form>
     </div>
 </body>

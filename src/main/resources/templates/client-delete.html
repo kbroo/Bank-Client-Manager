@@ -13,7 +13,7 @@
         <h1>Вы уверены что хотите удалить клиента с ID <span th:text="${client.id}">ID</span></h1>
         <form th:action="@{/clients/delete/{id}(id=${client.id})}" method="post">
             <button type="submit">Да, уверен</button><br>
-            <a th:href="@{/clients}">Нет, вернуться обратно</a>
+            <a th:href="@{/clients/{id}(id=${client.id})}">Нет, вернуться обратно</a>
         </form>
     </div>
 </body>
