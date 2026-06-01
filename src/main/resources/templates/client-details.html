@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Информация о клиенте</title>
+</head>
+<body>
+    <div th:if="${error}">
+        <h1 th:text="${error}" style="color: red">Ошибка</h1>
+    </div>
+
+    <div th:if="${client}">
+        <h1>Пользователь: <span th:text="${client.name}">name</span></h1>
+        <p>ID: <span th:text="${client.id}">ID</span></p>
+        <p>Email: <span th:text="${client.email}">email</span></p>
+        <p>Номер телефона: <span th:text="${client.phone}">phone number</span></p>
+    </div>
+
+    <a href="/clients">Назад</a>
+</body>
+</html>

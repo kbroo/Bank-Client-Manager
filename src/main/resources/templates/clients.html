@@ -9,13 +9,30 @@
 </head>
 <body>
     <h1>Clients</h1>
-    <table border="1">
+
+    <div th:if="${success}"><b th:text="${success}" style="color: green"></b></div>
+    <div th:if="${error}"><b th:text="${error}" style="color: red"></b></div>
+    <div th:if="${clients.isEmpty()}"><b>Список пуст</b></div>
+
+    <table th:if="${!clients.isEmpty()}" border="1">
+        <tr>
+            <th>ID</th>
+            <th><a href="/clients?sort=name">Имя</a></th>
+            <th>Email</th>
+            <th>Номер телефона</th>
+            <th colspan="3">Действия</th>
+        </tr>
         <tr th:each="client : ${clients}">
             <td th:text="${client.id}">ID</td>
             <td th:text="${client.name}">Name</td>
             <td th:text="${client.email}">Email</td>
+            <td th:text="${client.phone}">Phone number</td>
+            <td><a th:href="@{/clients/{id}(id=${client.id})}">Просмотр</a></td>
+            <td><a th:href="@{/clients/edit/{id}(id=${client.id})}">Редактировать</a></td>
+            <td><a th:href="@{/clients/delete/{id}(id=${client.id})}">Удалить</a></td>
         </tr>
     </table><br>
+    <a th:href="@{/clients/add}">Добавить нового клиента</a><br>
     <a href="/">Домой</a>
 </body>
 </html>

@@ -3,10 +3,7 @@ package com.kbroo.client_manager.service;
 import com.kbroo.client_manager.model.Client;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClientService {
@@ -28,9 +25,12 @@ public class ClientService {
                 .findFirst();
     }
     public int getCountClients() {
-        int result = 0;
-        for (Client client : clients) result++;
-        return result;
+        return clients.size();
+    }
+    public List<Client> getAllClientsSortedByName() {
+        return clients.stream()
+                .sorted(Comparator.comparing(Client::getName))
+                .toList();
     }
 
     public List<Client> searchClientsByName(String name) {
@@ -39,18 +39,19 @@ public class ClientService {
                 .toList();
     }
 
-    public void addClient(Client client) {
+    public boolean addClient(Client client) {
         if (clients.contains(client)) {
             System.out.println("Клиент уже существует");
-            return;
+            return false;
         }
         if (client.getId() == null || client.getId().isEmpty()) {
             client.setId(UUID.randomUUID().toString());
         }
         clients.add(client);
+        return true;
     }
 
-    public void deleteClient(String id) {
-        clients.removeIf(client -> client.getId().equals(id));
+    public boolean deleteClient(String id) {
+        return clients.removeIf(client -> client.getId().equals(id));
     }
 }
