@@ -1,5 +1,6 @@
 package com.kbroo.client_manager.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ public class Client {
     private String name;
     private String email;
     private String phone;
+    private LocalDateTime createdAt;
 
     public Client() {}
     public Client(String name, String email, String phone) {
@@ -15,6 +17,7 @@ public class Client {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.createdAt = LocalDateTime.now();
     }
 
     public String getId() {
@@ -40,6 +43,12 @@ public class Client {
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
