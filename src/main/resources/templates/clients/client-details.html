@@ -8,14 +8,14 @@
     <title>Информация о клиенте</title>
 </head>
 <body>
-    <div th:if="${success}">
+    <div th:if="${success}" align="center">
         <h1 th:text="${success}" style="color: green">success</h1>
     </div>
-    <div th:if="${error}">
+    <div th:if="${error}" align="center">
         <h1 th:text="${error}" style="color: red">error</h1>
     </div>
 
-    <div th:if="${client}">
+    <div th:if="${client}" align="center">
         <h1>Пользователь: <span th:text="${client.name}">name</span></h1>
         <p>ID: <span th:text="${client.id}">ID</span></p>
         <p>Email: <span th:text="${client.email}">email</span></p>
@@ -24,8 +24,10 @@
             <a th:href="@{/clients/edit/{id}(id=${client.id})}"> Редактировать </a><br>
             <a th:href="@{/clients/delete/{id}(id=${client.id})}"> Удалить </a>
         </div>
-    </div>
+    </div><br>
 
-    <br><a href="/clients">Назад</a>
+    <div align="center">
+        <a href="/clients">Назад</a>
+    </div>
 </body>
 </html>

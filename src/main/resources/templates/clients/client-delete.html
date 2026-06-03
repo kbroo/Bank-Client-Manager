@@ -8,8 +8,8 @@
     <title>Удаление клиента</title>
 </head>
 <body>
-    <div th:if="${error}"><b th:text="${error}">error</b></div>
-    <div th:if="${client}">
+    <div th:if="${error}" align="center"><b th:text="${error}">error</b></div>
+    <div th:if="${client}" align="center">
         <h1>Вы уверены что хотите удалить клиента с ID <span th:text="${client.id}">ID</span></h1>
         <form th:action="@{/clients/delete/{id}(id=${client.id})}" method="post">
             <button type="submit">Да, уверен</button><br>

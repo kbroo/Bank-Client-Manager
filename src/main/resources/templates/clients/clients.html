@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clients</title>
+</head>
+<body>
+    <div align="center">
+        <h1>Clients</h1>
+
+        <div th:if="${success}"><b th:text="${success}" style="color: green"></b></div>
+        <div th:if="${error}"><b th:text="${error}" style="color: red"></b></div>
+        <form th:action="@{/clients(name=${name})}">
+            <input type="text" placeholder="Поиск по имени" name="name">
+            <button>Поиск</button>
+        </form><br>
+        <div th:if="${clients.isEmpty()}"><b>Список пуст</b></div>
+
+        <table th:if="${!clients.isEmpty()}" border="1">
+            <tr>
+                <th>ID</th>
+                <th><a href="/clients?sort=name">Имя</a></th>
+                <th>Email</th>
+                <th>Номер телефона</th>
+                <th>Действия</th>
+            </tr>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.id}">ID</td>
+                <td th:text="${client.name}">Name</td>
+                <td th:text="${client.email}">Email</td>
+                <td th:text="${client.phone}">Phone number</td>
+                <td><a th:href="@{/clients/{id}(id=${client.id})}">Просмотр</a></td>
+            </tr>
+        </table><br>
+        <a th:href="@{/clients/add}">Добавить нового клиента</a><br>
+        <a href="/">Домой</a>
+    </div>
+</body>
+</html>

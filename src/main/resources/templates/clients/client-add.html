@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div th:if="${error}"><b th:text="${error}" style="color: red" align="center">error</b></div>
+
+    <div align="center">
+        <form th:action="@{/clients/add}" th:object="${client}" method="post">
+            <label>Имя:<input type="text" th:field="*{name}"></label>
+            <div th:if="${nameError}"><b th:text="${nameError}" style="color: red">error</b></div><br><br>
+            <label>Email:<input type="text" th:field="*{email}"></label>
+            <div th:if="${emailError}"><b th:text="${emailError}" style="color: red">error</b></div><br><br>
+            <label>Номер телефона:<input type="text" th:field="*{phone}"></label>
+            <div th:if="${phoneError}"><b th:text="${phoneError}" style="color: red">error</b></div><br><br>
+            <button type="submit">Добавить</button><br>
+            <a th:href="@{/clients}">Вернуться</a>
+        </form>
+    </div>
+</body>
+</html>

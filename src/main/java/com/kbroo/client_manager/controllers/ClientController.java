@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/clients")
@@ -42,7 +41,7 @@ public class ClientController {
         }
 
         model.addAttribute("clients", clients);
-        return "clients";
+        return "clients/clients";
     }
 
     @GetMapping("/{id}")
@@ -51,7 +50,7 @@ public class ClientController {
                 client -> model.addAttribute("client", client),
                 () -> model.addAttribute("error", "Клиент с ID " + id + " не найден.")
         );
-        return "client-details";
+        return "clients/client-details";
     }
 
     @GetMapping("/delete/{id}")
@@ -60,7 +59,7 @@ public class ClientController {
                 client -> model.addAttribute("client", client),
                 () -> model.addAttribute("error", "Клиент с ID " + id + " не найден.")
         );
-        return "client-delete";
+        return "clients/client-delete";
     }
 
     @PostMapping("/delete/{id}")
@@ -80,7 +79,7 @@ public class ClientController {
                 client -> model.addAttribute("client", client),
                 () -> model.addAttribute("error", "Клиент с ID " + id + " не найден.")
         );
-        return "client-edit";
+        return "clients/client-edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -101,7 +100,7 @@ public class ClientController {
                 model.addAttribute("nameError", bindingResult.getFieldError("name").getDefaultMessage());
             }
             model.addAttribute("client", modelAttribute);
-            return "client-edit";
+            return "clients/client-edit";
         }
         client.setName(modelAttribute.getName());
         client.setEmail(modelAttribute.getEmail());
@@ -113,7 +112,7 @@ public class ClientController {
     @GetMapping("/add")
     public String addClient(Model model) {
         model.addAttribute("client", new ClientForm());
-        return "client-add";
+        return "clients/client-add";
     }
 
     @PostMapping("/add")
@@ -129,7 +128,7 @@ public class ClientController {
                 model.addAttribute("nameError", bindingResult.getFieldError("name").getDefaultMessage());
             }
             model.addAttribute("client", modelAttribute);
-            return "client-add";
+            return "clients/client-add";
         }
         Client client = new Client();
         client.setName(modelAttribute.getName());
