@@ -7,7 +7,7 @@ import java.util.*;
 
 @Service
 public class ClientService {
-    private List<Client> clients;
+    private final List<Client> clients;
 
     public ClientService() {
         this.clients = new ArrayList<>();

@@ -2,14 +2,17 @@ package com.kbroo.client_manager.controllers;
 
 import com.kbroo.client_manager.model.Client;
 import com.kbroo.client_manager.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/clients")
@@ -100,7 +103,12 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public String completeAddClient(@ModelAttribute Client modelAttribute, RedirectAttributes redirectAttributes) {
+    public String completeAddClient(@Valid @ModelAttribute Client modelAttribute, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            String error = Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
+            redirectAttributes.addFlashAttribute("error", error);
+            return "redirect:/clients/add";
+        }
         boolean result = clientService.addClient(modelAttribute);
         if (result) {
             redirectAttributes.addFlashAttribute("success", "Новый клиент добавлен успешно.");
