@@ -1,5 +1,6 @@
 package com.kbroo.client_manager.model;
 
+import com.kbroo.client_manager.validation.ValidEmail;
 import com.kbroo.client_manager.validation.ValidPhone;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.UUID;
 public class Client {
     private String id;
     private String name;
+    @ValidEmail
     private String email;
     @ValidPhone
     private String phone;

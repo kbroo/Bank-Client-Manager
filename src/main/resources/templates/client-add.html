@@ -9,11 +9,14 @@
 </head>
 <body>
     <div th:if="${error}"><b th:text="${error}" style="color: red">error</b></div>
+
     <div>
         <form th:action="@{/clients/add}" th:object="${client}" method="post">
             <label>Имя:<input type="text" th:field="*{name}"></label><br>
             <label>Email:<input type="text" th:field="*{email}"></label><br>
+            <div th:if="${emailError}"><b th:text="${emailError}" style="color: red">error</b></div>
             <label>Номер телефона:<input type="text" th:field="*{phone}"></label><br>
+            <div th:if="${phoneError}"><b th:text="${phoneError}" style="color: red">error</b></div>
             <button type="submit">Добавить</button><br>
             <a th:href="@{/clients}">Вернуться</a>
         </form>

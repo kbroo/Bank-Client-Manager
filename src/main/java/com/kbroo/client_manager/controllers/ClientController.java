@@ -83,17 +83,27 @@ public class ClientController {
     }
 
     @PostMapping("/edit/{id}")
-    public String completeEditClient(@PathVariable String id, @ModelAttribute Client modelAttribute, RedirectAttributes redirectAttributes) {
+    public String completeEditClient(@Valid @ModelAttribute Client modelAttribute, BindingResult bindingResult, @PathVariable String id, Model model, RedirectAttributes redirectAttributes) {
         Client client = clientService.getClient(id).orElse(null);
         if (client == null) {
             redirectAttributes.addFlashAttribute("error", "Пользователь с ID "  + id +" не найден");
             return "redirect:/clients";
         }
+        if (bindingResult.hasErrors()) {
+            if (bindingResult.hasFieldErrors("phone")) {
+                model.addAttribute("phoneError", bindingResult.getFieldError("phone").getDefaultMessage());
+            }
+            if (bindingResult.hasFieldErrors("email")) {
+                model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
+            }
+            model.addAttribute("client", modelAttribute);
+            return "client-edit";
+        }
         client.setName(modelAttribute.getName());
         client.setEmail(modelAttribute.getEmail());
         client.setPhone(modelAttribute.getPhone());
         redirectAttributes.addFlashAttribute("success", "Данные пользователя с ID " + id + " изменены.");
-        return "redirect:/clients";
+        return "redirect:/clients/" + client.getId();
     }
 
     @GetMapping("/add")
@@ -103,11 +113,15 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public String completeAddClient(@Valid @ModelAttribute Client modelAttribute, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String completeAddClient(@Valid @ModelAttribute Client modelAttribute, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            String error = Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage();
-            redirectAttributes.addFlashAttribute("error", error);
-            return "redirect:/clients/add";
+            if (bindingResult.hasFieldErrors("phone")) {
+                model.addAttribute("phoneError", bindingResult.getFieldError("phone").getDefaultMessage());
+            }
+            if (bindingResult.hasFieldErrors("email")) {
+                model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
+            }
+            return "client-add";
         }
         boolean result = clientService.addClient(modelAttribute);
         if (result) {
