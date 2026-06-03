@@ -13,8 +13,8 @@
     <div th:if="${client}">
         <b>Редактирование пользователя <span th:text="${client.id}">ID</span>:</b>
         <form th:action="@{/clients/edit/{id}(id=${client.id})}" th:object="${client}" method="post">
-            <label>Имя:<input type="text" th:field="*{name}"></label>
-            <label>Email:<input type="text" th:field="*{email}"></label>
+            <label>Имя:<input type="text" th:field="*{name}"></label><br>
+            <label>Email:<input type="text" th:field="*{email}"></label><br>
             <label>Номер телефона:<input type="text" th:field="*{phone}"></label><br>
             <button type="submit" >Сохранить</button><br>
             <a th:href="@{/clients/{id}(id=${client.id})}">Вернуться</a>

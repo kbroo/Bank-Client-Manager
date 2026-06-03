@@ -12,6 +12,10 @@
 
     <div th:if="${success}"><b th:text="${success}" style="color: green"></b></div>
     <div th:if="${error}"><b th:text="${error}" style="color: red"></b></div>
+    <form th:action="@{/clients(name=${name})}">
+        <input type="text" placeholder="Поиск по имени" name="name">
+        <button>Поиск</button>
+    </form><br>
     <div th:if="${clients.isEmpty()}"><b>Список пуст</b></div>
 
     <table th:if="${!clients.isEmpty()}" border="1">

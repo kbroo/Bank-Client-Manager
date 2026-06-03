@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -21,13 +22,21 @@ public class ClientController {
     }
 
     @GetMapping
-    public String listClients(@RequestParam(required = false) String sort, Model model) {
+    public String listClients(@RequestParam(required = false) String sort, @RequestParam(required = false) String name, Model model) {
         List<Client> clients;
-        if ("name".equals(sort)) {
-            clients = clientService.getAllClientsSortedByName();
+
+        if (name != null && !name.isBlank()) {
+            clients = clientService.getClientsByName(name);
         } else {
             clients = clientService.getAllClients();
         }
+
+        if ("name".equals(sort) && !clients.isEmpty()) {
+            clients = clients.stream()
+                    .sorted(Comparator.comparing(Client::getName))
+                    .toList();
+        }
+
         model.addAttribute("clients", clients);
         return "clients";
     }
@@ -95,6 +104,7 @@ public class ClientController {
         boolean result = clientService.addClient(modelAttribute);
         if (result) {
             redirectAttributes.addFlashAttribute("success", "Новый клиент добавлен успешно.");
+            return "redirect:/clients/" + modelAttribute.getId();
         } else {
             redirectAttributes.addFlashAttribute("error", "Ошибка при добавлении клиента.");
         }

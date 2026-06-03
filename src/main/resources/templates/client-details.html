@@ -8,8 +8,11 @@
     <title>Информация о клиенте</title>
 </head>
 <body>
+    <div th:if="${success}">
+        <h1 th:text="${success}" style="color: green">success</h1>
+    </div>
     <div th:if="${error}">
-        <h1 th:text="${error}" style="color: red">Ошибка</h1>
+        <h1 th:text="${error}" style="color: red">error</h1>
     </div>
 
     <div th:if="${client}">

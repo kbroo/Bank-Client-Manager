@@ -54,4 +54,10 @@ public class ClientService {
     public boolean deleteClient(String id) {
         return clients.removeIf(client -> client.getId().equals(id));
     }
+
+    public List<Client> getClientsByName(String name) {
+        return clients.stream()
+                .filter(client -> client.getName().toLowerCase().contains(name.toLowerCase()))
+                .toList();
+    }
 }
