@@ -1,5 +1,6 @@
 package com.kbroo.client_manager.controllers;
 
+import com.kbroo.client_manager.dto.ClientForm;
 import com.kbroo.client_manager.model.Client;
 import com.kbroo.client_manager.service.ClientService;
 import jakarta.validation.Valid;
@@ -96,6 +97,9 @@ public class ClientController {
             if (bindingResult.hasFieldErrors("email")) {
                 model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
             }
+            if (bindingResult.hasFieldErrors("name")) {
+                model.addAttribute("nameError", bindingResult.getFieldError("name").getDefaultMessage());
+            }
             model.addAttribute("client", modelAttribute);
             return "client-edit";
         }
@@ -108,12 +112,12 @@ public class ClientController {
 
     @GetMapping("/add")
     public String addClient(Model model) {
-        model.addAttribute("client", new Client());
+        model.addAttribute("client", new ClientForm());
         return "client-add";
     }
 
     @PostMapping("/add")
-    public String completeAddClient(@Valid @ModelAttribute Client modelAttribute, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String completeAddClient(@Valid @ModelAttribute ClientForm modelAttribute, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("phone")) {
                 model.addAttribute("phoneError", bindingResult.getFieldError("phone").getDefaultMessage());
@@ -121,12 +125,20 @@ public class ClientController {
             if (bindingResult.hasFieldErrors("email")) {
                 model.addAttribute("emailError", bindingResult.getFieldError("email").getDefaultMessage());
             }
+            if (bindingResult.hasFieldErrors("name")) {
+                model.addAttribute("nameError", bindingResult.getFieldError("name").getDefaultMessage());
+            }
+            model.addAttribute("client", modelAttribute);
             return "client-add";
         }
-        boolean result = clientService.addClient(modelAttribute);
+        Client client = new Client();
+        client.setName(modelAttribute.getName());
+        client.setEmail(modelAttribute.getEmail());
+        client.setPhone(modelAttribute.getPhone());
+        boolean result = clientService.addClient(client);
         if (result) {
             redirectAttributes.addFlashAttribute("success", "Новый клиент добавлен успешно.");
-            return "redirect:/clients/" + modelAttribute.getId();
+            return "redirect:/clients/" + client.getId();
         } else {
             redirectAttributes.addFlashAttribute("error", "Ошибка при добавлении клиента.");
         }

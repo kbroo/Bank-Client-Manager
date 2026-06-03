@@ -14,6 +14,7 @@
         <b>Редактирование пользователя <span th:text="${client.id}">ID</span>:</b>
         <form th:action="@{/clients/edit/{id}(id=${client.id})}" th:object="${client}" method="post">
             <label>Имя:<input type="text" th:field="*{name}"></label><br>
+            <div th:if="${nameError}"><b th:text="${nameError}" style="color: red">error</b></div>
             <label>Email:<input type="text" th:field="*{email}"></label><br>
             <div th:if="${emailError}"><b th:text="${emailError}" style="color: red">error</b></div>
             <label>Номер телефона:<input type="text" th:field="*{phone}"></label><br>
